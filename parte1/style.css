@@ -21,10 +21,77 @@ body {
     line-height: 1.6;
 }
 
+/* ---------- Cabeçalho (base mobile) ---------- */
 header {
     background: #1E3A8A;
     color: #FFFFFF;
-    padding: 1rem 2rem;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+header h1 {
+    margin-right: auto;
+    /* clamp() usado na atividade: mínimo 1.5rem, preferido 1rem + 2.5vw, máximo 2rem */
+    font-size: clamp(1.5rem, 1rem + 2.5vw, 2rem);
+}
+
+#busca {
+    flex: 1 1 180px;
+    max-width: 320px;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn-adicionar {
+    background: #F59E0B;
+    color: #1F2937;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Na base mobile o botão mostra apenas o "+" */
+.btn-adicionar-longo {
+    display: none;
+}
+
+/* ---------- Filtros de status ---------- */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+
+nav button {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid #1E3A8A;
+    background: #FFFFFF;
+    color: #1E3A8A;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Filtro ativo destacado (Atividade 2) */
+nav button.ativo {
+    background: #1E3A8A;
+    color: #FFFFFF;
+}
+
+/* ---------- Lista de cards: GRID responsivo (Aula 3) ---------- */
+#lista {
+    display: grid;
+    /* colunas automáticas: entram quantas couberem, mínimo 200px */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 1rem;
 }
 
 .card {
@@ -33,4 +100,104 @@ header {
     border: 1px solid #ddd;    /* borda */
     border-radius: 8px;        /* cantos */
     box-shadow: 0 1px 4px #0002; /* sombra */
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+/* Pôster com proporção fixa de pôster de cinema (2:3) */
+.card img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;         /* preenche sem distorcer */
+    display: block;
+    border-radius: 4px;
+}
+
+.card h2 {
+    font-size: 1.05rem;
+}
+
+.card p {
+    color: #6B7280;
+    font-size: 0.9rem;
+}
+
+.estrelas {
+    color: #F59E0B;
+    letter-spacing: 2px;
+}
+
+.badge {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+}
+
+.badge.assistido {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+.badge.assistindo {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.badge.quero-assistir {
+    background: #DBEAFE;
+    color: #1E40AF;
+}
+
+.card button {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid #1E3A8A;
+    background: #FFFFFF;
+    color: #1E3A8A;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background: #1E3A8A;
+    color: #FFFFFF;
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+}
+
+/* ---------- Desktop (Aula 3) ---------- */
+@media (min-width: 1024px) {
+    header {
+        padding: 1rem 2rem;
+    }
+
+    /* h1 maior no desktop (também com clamp) */
+    header h1 {
+        font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+    }
+
+    nav {
+        padding: 0.75rem 2rem;
+    }
+
+    /* gap maior entre os cards */
+    #lista {
+        gap: 24px;
+        padding: 1.5rem 2rem;
+    }
+
+    /* a partir de 1024px: esconde o "+" e mostra "+ Adicionar" */
+    .btn-adicionar-curto {
+        display: none;
+    }
+
+    .btn-adicionar-longo {
+        display: inline;
+    }
 }

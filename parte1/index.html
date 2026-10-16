@@ -12,7 +12,12 @@
     <header>
         <h1>CineTrack</h1>
         <input type="search" id="busca" aria-label="Buscar filme por título" placeholder="Buscar filme...">
-        <button type="button" onclick="location.href='adicionar.html'">+ Adicionar</button>
+        <!-- Dois elementos de texto: o curto aparece em telas menores,
+             o longo a partir de 1024px (troca feita no @media do CSS) -->
+        <button type="button" class="btn-adicionar" onclick="location.href='adicionar.html'">
+            <span class="btn-adicionar-curto" aria-label="Adicionar filme">+</span>
+            <span class="btn-adicionar-longo">+ Adicionar</span>
+        </button>
     </header>
 
     <nav aria-label="Filtros de status">
