@@ -107,17 +107,75 @@ function renderizarCards(lista) {
             <p>${filme.ano} &middot; ${filme.genero}</p>
             <span class="estrelas" aria-label="Nota ${filme.nota} de 5">${estrelas(filme.nota)}</span>
             <span class="badge ${filme.status}">${rotuloStatus(filme.status)}</span>
-            <button type="button">Editar</button>
-            <button type="button">Remover</button>
+            <button type="button" class="btn-editar">Editar</button>
+            <button type="button" class="btn-remover">Remover</button>
         </article>
     `).join("")
 }
 
-// 4. Ao carregar: injeta os cards no lugar do HTML digitado à mão.
+// 1. Ao carregar: injeta os cards no lugar do HTML digitado à mão.
 //    O script está no fim do <body>, então #lista já existe.
-document.querySelector("#lista").innerHTML = renderizarCards(filmesIniciais)
+//    (Aula 3: este bloco virou a função renderizar(), logo abaixo.)
 
-// 6. Rodapé: total de filmes com template literal.
-const TOTAL = 6
+// Aula 3 — a lista agora tem estado: filmes é a cópia que pode mudar
+// (remoções). let porque o filter devolve um array novo a cada remoção.
+let filmes = [...filmesIniciais]
+
+// Status selecionado na nav. "todos" mostra o array inteiro.
+let statusAtual = "todos"
+
+// Rodapé: a contagem acompanha o estado atual, não é mais fixa.
 const rodapeInfo = document.querySelector("#total-filmes")
-rodapeInfo.textContent = `CineTrack © 2026 · ${TOTAL} filmes cadastrados`
+
+// 1 + 4. Renderiza na tela: filtra o array pelo status da nav e
+//    injeta os cards. Toda mudança (remoção ou filtro) passa por aqui.
+function renderizar() {
+    const subconjunto = statusAtual === "todos"
+        ? filmes
+        : filmes.filter((filme) => filme.status === statusAtual)
+
+    document.querySelector("#lista").innerHTML = renderizarCards(subconjunto)
+    rodapeInfo.textContent = `CineTrack © 2026 · ${filmes.length} filmes cadastrados`
+}
+
+// 3. Delegação de eventos em #lista: um único listener cuida dos botões
+//    de todos os cards — inclusive dos que forem criados no futuro.
+document.querySelector("#lista").addEventListener("click", (evento) => {
+    const botao = evento.target.closest("button")
+
+    if (botao.classList.contains("btn-remover")) {
+        // closest sobe do botão até o <article> e lê o data-id do card
+        const id = Number(botao.closest(".card").dataset.id)
+        const filme = filmes.find((f) => f.id === id)
+
+        // confirm() devolve true só quando o usuário aceita
+        if (filme && confirm(`Remover "${filme.titulo}" da lista?`)) {
+            filmes = filmes.filter((f) => f.id !== id)
+            renderizar()
+        }
+    }
+
+    // btn-editar ganha comportamento em uma próxima aula
+})
+
+// 4. Filtros: um listener na nav move a classe .ativo e re-renderiza
+//    só o subconjunto do status do botão clicado.
+const nav = document.querySelector("nav")
+
+nav.addEventListener("click", (evento) => {
+    const botao = evento.target.closest("button")
+    if (!botao) {
+        return
+    }
+
+    // move o destaque visual para o botão clicado
+    nav.querySelector(".ativo").classList.remove("ativo")
+    botao.classList.add("ativo")
+
+    // data-status vem do HTML: todos, assistido, assistindo, quero
+    statusAtual = botao.dataset.status
+    renderizar()
+})
+
+// Primeira renderização da página.
+renderizar()
