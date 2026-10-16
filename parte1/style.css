@@ -3,7 +3,69 @@
   - Primária: #1E3A8A (azul escuro)
   - Acento:   #F59E0B (âmbar/laranja)
   - Neutro:   #F4F4F5 (cinza claro de fundo)
+
+  Aula 4: valores fixos migrados para variáveis CSS em :root
+  e tema escuro automático via prefers-color-scheme.
 */
+
+/* ---------- Variáveis do tema (item 1) ---------- */
+:root {
+    /* cores base */
+    --cor-primaria: #1E3A8A;
+    --cor-primaria-contraste: #FFFFFF;
+    --cor-acento: #F59E0B;
+    --cor-acento-forte: #B45309;
+    --cor-sobre-acento: #1F2937;
+    --cor-fundo: #F4F4F5;
+    --cor-superficie: #FFFFFF;
+    --cor-texto: #1F2937;
+    --cor-texto-suave: #6B7280;
+    --cor-borda: #DDDDDD;
+    --cor-overlay: rgba(0, 0, 0, 0.6);
+
+    /* cores semânticas dos status (item 3) */
+    --cor-assistido-fundo: #D1FAE5;   /* verde: concluído */
+    --cor-assistido-texto: #065F46;
+    --cor-assistindo-fundo: #FEF3C7;  /* âmbar: em andamento */
+    --cor-assistindo-texto: #92400E;
+    --cor-quero-fundo: #DBEAFE;       /* azul: planejado */
+    --cor-quero-texto: #1E40AF;
+
+    /* raios e espaçamentos */
+    --raio-sm: 4px;
+    --raio-md: 8px;
+    --raio-pill: 999px;
+    --espaco-05: 0.5rem;
+    --espaco-1: 0.35rem;
+    --espaco-2: 0.75rem;
+    --espaco-3: 1rem;   /* 16px */
+    --espaco-4: 1.5rem; /* 24px */
+    --espaco-5: 2rem;
+}
+
+/* ---------- Tema escuro automático (item 2) ---------- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cor-primaria: #3B82F6;
+        --cor-primaria-contraste: #FFFFFF;
+        --cor-acento: #FBBF24;
+        --cor-acento-forte: #D97706;
+        --cor-sobre-acento: #1F2937;
+        --cor-fundo: #111827;
+        --cor-superficie: #1F2937;
+        --cor-texto: #F9FAFB;
+        --cor-texto-suave: #9CA3AF;
+        --cor-borda: #374151;
+        --cor-overlay: rgba(0, 0, 0, 0.75);
+
+        --cor-assistido-fundo: #064E3B;
+        --cor-assistido-texto: #6EE7B7;
+        --cor-assistindo-fundo: #78350F;
+        --cor-assistindo-texto: #FCD34D;
+        --cor-quero-fundo: #1E3A8A;
+        --cor-quero-texto: #93C5FD;
+    }
+}
 
 /* Reset aplicado */
 *,
@@ -14,46 +76,69 @@
     box-sizing: border-box;
 }
 
+/* Transição suave nos botões (item 4) */
+button {
+    font: inherit;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* Foco visível em qualquer elemento interativo (item 4) */
+:focus-visible {
+    outline: 2px solid var(--cor-acento);
+    outline-offset: 2px;
+}
+
 body {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    color: #1F2937;
-    background: #F4F4F5;
+    color: var(--cor-texto);
+    background: var(--cor-fundo);
     line-height: 1.6;
 }
 
 /* ---------- Cabeçalho (base mobile) ---------- */
 header {
-    background: #1E3A8A;
-    color: #FFFFFF;
-    padding: 1rem;
+    background: var(--cor-primaria);
+    color: var(--cor-primaria-contraste);
+    padding: var(--espaco-3);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--espaco-2);
 }
 
 header h1 {
     margin-right: auto;
-    /* clamp() usado na atividade: mínimo 1.5rem, preferido 1rem + 2.5vw, máximo 2rem */
     font-size: clamp(1.5rem, 1rem + 2.5vw, 2rem);
 }
 
 #busca {
     flex: 1 1 180px;
     max-width: 320px;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem var(--espaco-2);
     border: none;
-    border-radius: 6px;
+    border-radius: var(--raio-sm);
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
 }
 
 .btn-adicionar {
-    background: #F59E0B;
-    color: #1F2937;
+    background: var(--cor-acento);
+    color: var(--cor-sobre-acento);
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+    padding: 0.5rem var(--espaco-3);
+    border-radius: var(--raio-sm);
     font-weight: 600;
-    cursor: pointer;
+}
+
+.btn-adicionar:hover {
+    background: var(--cor-acento-forte);
+    transform: translateY(-1px);
 }
 
 /* Na base mobile o botão mostra apenas o "+" */
@@ -65,44 +150,48 @@ header h1 {
 nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
+    gap: var(--espaco-05);
+    padding: var(--espaco-2) var(--espaco-3);
 }
 
 nav button {
     padding: 0.4rem 0.9rem;
-    border: 1px solid #1E3A8A;
-    background: #FFFFFF;
-    color: #1E3A8A;
-    border-radius: 999px;
+    border: 1px solid var(--cor-primaria);
+    background: var(--cor-superficie);
+    color: var(--cor-primaria);
+    border-radius: var(--raio-pill);
     font-size: 0.9rem;
-    cursor: pointer;
 }
 
-/* Filtro ativo destacado (Atividade 2) */
+nav button:hover {
+    background: var(--cor-quero-fundo);
+    color: var(--cor-quero-texto);
+}
+
+/* Filtro ativo destacado (estático por enquanto) */
 nav button.ativo {
-    background: #1E3A8A;
-    color: #FFFFFF;
+    background: var(--cor-primaria);
+    color: var(--cor-primaria-contraste);
 }
 
-/* ---------- Lista de cards: GRID responsivo (Aula 3) ---------- */
+/* ---------- Lista de cards (grid da Atividade 3) ---------- */
 #lista {
     display: grid;
     /* colunas automáticas: entram quantas couberem, mínimo 200px */
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-    padding: 1rem;
+    gap: var(--espaco-3);
+    padding: var(--espaco-3);
 }
 
 .card {
-    background: #FFFFFF;
-    padding: 16px;             /* espaço interno */
-    border: 1px solid #ddd;    /* borda */
-    border-radius: 8px;        /* cantos */
-    box-shadow: 0 1px 4px #0002; /* sombra */
+    background: var(--cor-superficie);
+    padding: var(--espaco-3);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    box-shadow: 0 1px 4px #0002;
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: var(--espaco-1);
 }
 
 /* Pôster com proporção fixa de pôster de cinema (2:3) */
@@ -111,7 +200,7 @@ nav button.ativo {
     aspect-ratio: 2 / 3;
     object-fit: cover;         /* preenche sem distorcer */
     display: block;
-    border-radius: 4px;
+    border-radius: var(--raio-sm);
 }
 
 .card h2 {
@@ -119,12 +208,12 @@ nav button.ativo {
 }
 
 .card p {
-    color: #6B7280;
+    color: var(--cor-texto-suave);
     font-size: 0.9rem;
 }
 
 .estrelas {
-    color: #F59E0B;
+    color: var(--cor-acento);
     letter-spacing: 2px;
 }
 
@@ -133,63 +222,193 @@ nav button.ativo {
     font-size: 0.75rem;
     font-weight: 600;
     padding: 0.15rem 0.6rem;
-    border-radius: 999px;
+    border-radius: var(--raio-pill);
 }
 
+/* Cores semânticas por status (item 3) */
 .badge.assistido {
-    background: #D1FAE5;
-    color: #065F46;
+    background: var(--cor-assistido-fundo);
+    color: var(--cor-assistido-texto);
 }
 
 .badge.assistindo {
-    background: #FEF3C7;
-    color: #92400E;
+    background: var(--cor-assistindo-fundo);
+    color: var(--cor-assistindo-texto);
 }
 
-.badge.quero-assistir {
-    background: #DBEAFE;
-    color: #1E40AF;
+.badge.quero {
+    background: var(--cor-quero-fundo);
+    color: var(--cor-quero-texto);
 }
 
 .card button {
     padding: 0.35rem 0.6rem;
-    border: 1px solid #1E3A8A;
-    background: #FFFFFF;
-    color: #1E3A8A;
-    border-radius: 6px;
+    border: 1px solid var(--cor-primaria);
+    background: var(--cor-superficie);
+    color: var(--cor-primaria);
+    border-radius: var(--raio-sm);
     font-size: 0.85rem;
-    cursor: pointer;
 }
 
 .card button:hover {
-    background: #1E3A8A;
-    color: #FFFFFF;
+    background: var(--cor-primaria);
+    color: var(--cor-primaria-contraste);
+    transform: translateY(-1px);
 }
 
 footer {
-    padding: 1rem;
+    padding: var(--espaco-3);
     text-align: center;
 }
 
-/* ---------- Desktop (Aula 3) ---------- */
+footer a {
+    color: var(--cor-primaria);
+}
+
+/* ---------- Modal (itens 5 e 6) ---------- */
+.modal {
+    position: fixed;           /* cobre a janela inteira */
+    inset: 0;
+    background: var(--cor-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--espaco-3);
+    z-index: 10;
+}
+
+/* o atributo hidden precisa vencer o display:flex acima */
+.modal[hidden] {
+    display: none;
+}
+
+.modal-conteudo {
+    position: relative;
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+    width: min(480px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: var(--espaco-4);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    /* animação de entrada (item 6) */
+    animation: modal-entrar 0.3s ease;
+}
+
+@keyframes modal-entrar {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-conteudo h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--espaco-2);
+}
+
+.modal-fechar {
+    position: absolute;
+    top: var(--espaco-2);
+    right: var(--espaco-2);
+    border: none;
+    background: transparent;
+    color: var(--cor-texto-suave);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.modal-fechar:hover {
+    color: var(--cor-texto);
+    transform: scale(1.15);
+}
+
+/* Campos do formulário (item 6) — valem para o modal e para adicionar.html */
+#form-filme {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-1);
+}
+
+#form-filme label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cor-texto-suave);
+    margin-top: var(--espaco-1);
+}
+
+#form-filme input,
+#form-filme select,
+#form-filme textarea {
+    padding: 0.5rem var(--espaco-2);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-sm);
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    font: inherit;
+    transition: border-color 0.2s ease;
+}
+
+#form-filme textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+#form-filme input:focus-visible,
+#form-filme select:focus-visible,
+#form-filme textarea:focus-visible {
+    border-color: var(--cor-acento);
+}
+
+#form-filme button {
+    margin-top: var(--espaco-2);
+    padding: 0.6rem var(--espaco-3);
+    border-radius: var(--raio-sm);
+}
+
+#form-filme button[type="submit"] {
+    background: var(--cor-primaria);
+    color: var(--cor-primaria-contraste);
+    border: none;
+    font-weight: 600;
+}
+
+#form-filme button[type="button"] {
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+}
+
+#form-filme button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Desktop ---------- */
 @media (min-width: 1024px) {
     header {
-        padding: 1rem 2rem;
+        padding: var(--espaco-3) var(--espaco-5);
     }
 
-    /* h1 maior no desktop (também com clamp) */
+    /* h1 maior no desktop (clamp da Aula 3) */
     header h1 {
         font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
     }
 
     nav {
-        padding: 0.75rem 2rem;
+        padding: var(--espaco-2) var(--espaco-5);
     }
 
     /* gap maior entre os cards */
     #lista {
-        gap: 24px;
-        padding: 1.5rem 2rem;
+        gap: var(--espaco-4);
+        padding: var(--espaco-4) var(--espaco-5);
     }
 
     /* a partir de 1024px: esconde o "+" e mostra "+ Adicionar" */
