@@ -265,6 +265,31 @@ footer a {
     color: var(--cor-primaria);
 }
 
+/* ---------- Página adicionar.html ---------- */
+/* o conteúdo da página fica em um cartão centralizado,
+   com a mesma aparência do modal da index */
+#pagina-adicionar {
+    /* largura explícita para o margin:auto centralizar também no mobile */
+    width: min(528px, calc(100% - 2 * var(--espaco-3)));  /* 480px do modal + padding */
+    margin: var(--espaco-3) auto var(--espaco-4);
+    padding: var(--espaco-4);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    box-shadow: 0 1px 4px #0002;
+}
+
+#pagina-adicionar h1 {
+    font-size: 1.25rem;
+    margin-bottom: var(--espaco-2);
+}
+
+.link-voltar {
+    display: inline-block;
+    margin: var(--espaco-3) var(--espaco-3) 0;
+    color: var(--cor-primaria);
+}
+
 /* ---------- Modal (itens 5 e 6) ---------- */
 .modal {
     position: fixed;           /* cobre a janela inteira */
@@ -282,13 +307,16 @@ footer a {
     display: none;
 }
 
+/* coluna em flex: o título fica fixo e o formulário é quem rola,
+   preservando o padding interno do cartão mesmo com conteúdo longo */
 .modal-conteudo {
     position: relative;
+    display: flex;
+    flex-direction: column;
     background: var(--cor-superficie);
     color: var(--cor-texto);
     width: min(480px, 100%);
     max-height: 90vh;
-    overflow-y: auto;
     padding: var(--espaco-4);
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio-md);
@@ -334,6 +362,10 @@ footer a {
     display: flex;
     flex-direction: column;
     gap: var(--espaco-1);
+    /* dentro do modal é o formulário que rola (o cartão é flex column),
+       assim o padding do modal nunca é "engolido" pela rolagem */
+    overflow-y: auto;
+    min-height: 0;
 }
 
 #form-filme label {

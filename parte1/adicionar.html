@@ -9,11 +9,14 @@
 </head>
 
 <body>
-    <a href="index.html">Voltar</a>
+    <a class="link-voltar" href="index.html">Voltar</a>
 
-    <form id="form-filme">
+    <main id="pagina-adicionar">
+        <h1>Adicionar filme</h1>
+
+        <form id="form-filme">
         <input type="text" name="titulo" id="titulo-filme" required>
-        <label for="nome-filme">Título</label>
+        <label for="titulo-filme">Título</label>
 
         <input type="number" min="1888" max="2030" id="ano-filme" name="ano" required>
         <label for="ano-filme">Ano</label>
@@ -39,7 +42,8 @@
 
         <button type="button">Cancelar</button>
         <button type="submit">Salvar</button>
-    </form>
+        </form>
+    </main>
 
 </body>
 
