@@ -19,8 +19,6 @@ const estrelas = (nota) => {
     return texto
 }
 
-console.log(rotuloStatus("quero"), estrelas(3))
-
 const filmesIniciais = [
     {
         id: 1,
