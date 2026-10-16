@@ -8,40 +8,86 @@
 </head>
 
 <body>
-    <h1>CineTrack</h1>
+    <header>
+        <h1>CineTrack</h1>
+        <input type="search" id="busca" aria-label="Buscar filme por título" placeholder="Buscar filme...">
+        <button type="button" onclick="location.href='adicionar.html'">+ Adicionar</button>
+    </header>
 
-    <a href="adicionar.html">+ Adicionar filme</a>
+    <nav aria-label="Filtros de status">
+        <button type="button" class="ativo">Todos</button>
+        <button type="button">Assistido</button>
+        <button type="button">Assistindo</button>
+        <button type="button">Quero assistir</button>
+    </nav>
 
-    <p><strong>CineTrack</strong> é um app para gerenciar sua coleção de filmes.</p>
+    <main>
+        <section id="lista" aria-live="polite">
+            <article class="card">
+                <img src="https://image.tmdb.org/t/p/w300/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg" alt="Pôster do filme A Origem">
+                <h2>A Origem</h2>
+                <p>2010 &middot; Ficção científica</p>
+                <span class="estrelas" aria-label="Nota 5 de 5">★★★★★</span>
+                <span class="badge assistido">Assistido</span>
+                <button type="button">Editar</button>
+                <button type="button">Remover</button>
+            </article>
 
-    <!-- Lista de status possíveis -->
-    <h2>Status possíveis</h2>
-    <ul>
-        <li>Assistido</li>
-        <li>Assistindo</li>
-        <li>Quero assistir</li>
-    </ul>
+            <article class="card">
+                <img src="https://image.tmdb.org/t/p/w300/bNGW8zYA91VqTZfV3jnKHPEKKvB.jpg" alt="Pôster do filme Parasita">
+                <h2>Parasita</h2>
+                <p>2019 &middot; Drama, Suspense</p>
+                <span class="estrelas" aria-label="Nota 5 de 5">★★★★★</span>
+                <span class="badge assistido">Assistido</span>
+                <button type="button">Editar</button>
+                <button type="button">Remover</button>
+            </article>
 
-    <!-- Lista de filmes favoritos -->
-    <h2>Meus filmes favoritos</h2>
-    <ol>
-        <li>Mulholland Drive</li>
-        <li>Chungking Express</li>
-        <li>Fight Club</li>
-    </ol>
+            <article class="card">
+                <img src="https://image.tmdb.org/t/p/w300/y3IhuITELtprMhUd7bccu629rba.jpg" alt="Pôster do filme O Auto da Compadecida">
+                <h2>O Auto da Compadecida</h2>
+                <p>2000 &middot; Comédia</p>
+                <span class="estrelas" aria-label="Nota 4 de 5">★★★★☆</span>
+                <span class="badge assistido">Assistido</span>
+                <button type="button">Editar</button>
+                <button type="button">Remover</button>
+            </article>
 
-    <!-- Descrição de um filme -->
-    <h2>Sobre Mulholland Drive</h2>
-    <dl>
-        <dt>Diretor</dt>
-        <dd>David Lynch</dd>
-        <dt>Ano</dt>
-        <dd>2001</dd>
-        <dt>Gênero</dt>
-        <dd>Drama, Mistério, Suspense</dd>
-    </dl>
+            <article class="card">
+                <img src="https://image.tmdb.org/t/p/w300/VMy4UGsI2u3f4fALGeCqCdsQBb.jpg" alt="Pôster do filme Duna: Parte Dois">
+                <h2>Duna: Parte Dois</h2>
+                <p>2024 &middot; Ficção científica</p>
+                <span class="estrelas" aria-label="Nota 4 de 5">★★★★☆</span>
+                <span class="badge assistindo">Assistindo</span>
+                <button type="button">Editar</button>
+                <button type="button">Remover</button>
+            </article>
 
-    <p>&copy; 2026 CineTrack</p>
+            <article class="card">
+                <img src="https://image.tmdb.org/t/p/w300/tR1XVa5bxgdh2bRw2u0DzrgkO2l.jpg" alt="Pôster do filme Interestelar">
+                <h2>Interestelar</h2>
+                <p>2014 &middot; Ficção científica</p>
+                <span class="estrelas" aria-label="Nota 5 de 5">★★★★★</span>
+                <span class="badge quero-assistir">Quero assistir</span>
+                <button type="button">Editar</button>
+                <button type="button">Remover</button>
+            </article>
+
+            <article class="card">
+                <img src="https://image.tmdb.org/t/p/w300/gfnXixcGC060QcG6JPxN6AMdVsq.jpg" alt="Pôster do filme Cidade de Deus">
+                <h2>Cidade de Deus</h2>
+                <p>2002 &middot; Drama</p>
+                <span class="estrelas" aria-label="Nota 5 de 5">★★★★★</span>
+                <span class="badge assistido">Assistido</span>
+                <button type="button">Editar</button>
+                <button type="button">Remover</button>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <a href="adicionar.html">Adicionar novo filme</a>
+    </footer>
 </body>
 
 </html>
