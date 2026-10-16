@@ -156,6 +156,26 @@ nav button.ativo {
     color: var(--cor-primaria-contraste);
 }
 
+/* ANP 06: ordenação — rótulo e select no mesmo grupo visual dos filtros */
+.rotulo-ordenar {
+    align-self: center;
+    margin-left: var(--espaco-2);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--cor-primaria);
+}
+
+nav select {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--cor-primaria);
+    background: var(--cor-superficie);
+    color: var(--cor-primaria);
+    border-radius: var(--raio-pill);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
 /* ---------- Lista de cards ---------- */
 #lista {
     display: grid;
