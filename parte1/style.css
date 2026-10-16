@@ -479,3 +479,64 @@ footer a {
         display: inline;
     }
 }
+
+/* ---------- Impressão ---------- */
+/* Mesma técnica do dark mode: redefinimos as variáveis do :root.
+   Como este bloco vem por último no arquivo, quando o sistema está em
+   dark mode E o destino é o papel, os valores claros daqui vencem a
+   cascata — o tema escuro nunca vaza para a impressão. */
+@media print {
+    :root {
+        --cor-primaria: #1E3A8A;
+        --cor-primaria-contraste: #FFFFFF;
+        --cor-acento: #F59E0B;
+        --cor-acento-forte: #B45309;
+        --cor-sobre-acento: #1F2937;
+        --cor-fundo: #FFFFFF;
+        --cor-superficie: #FFFFFF;
+        --cor-texto: #000000;
+        --cor-texto-suave: #374151;
+        --cor-borda: #999999;
+        --cor-overlay: rgba(0, 0, 0, 0.6);
+
+        --cor-assistido-fundo: #D1FAE5;
+        --cor-assistido-texto: #065F46;
+        --cor-assistindo-fundo: #FEF3C7;
+        --cor-assistindo-texto: #92400E;
+        --cor-quero-fundo: #DBEAFE;
+        --cor-quero-texto: #1E40AF;
+    }
+
+    /* Busca, botão "+ Adicionar", filtros, botões Editar/Remover dos
+       cards e footer não fazem sentido no papel. */
+    #busca,
+    .btn-adicionar,
+    nav,
+    .card button,
+    footer {
+        display: none;
+    }
+
+    /* O header vira um simples título em texto escuro sobre papel branco
+       (fundo azul-escuro gastaria tinta e contrastaria com o catálogo). */
+    header {
+        background: transparent;
+        color: var(--cor-texto);
+        border-bottom: 1px solid var(--cor-borda);
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Sem sombras no papel. */
+    .card,
+    #pagina-adicionar {
+        box-shadow: none;
+    }
+
+    /* Nenhum card cortado ao meio na troca de página. */
+    .card {
+        break-inside: avoid;
+    }
+}
