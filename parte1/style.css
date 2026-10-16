@@ -1,16 +1,5 @@
-/*
-  Cores do projeto (paleta escolhida no coolors.co):
-  - Primária: #1E3A8A (azul escuro)
-  - Acento:   #F59E0B (âmbar/laranja)
-  - Neutro:   #F4F4F5 (cinza claro de fundo)
-
-  Aula 4: valores fixos migrados para variáveis CSS em :root
-  e tema escuro automático via prefers-color-scheme.
-*/
-
-/* ---------- Variáveis do tema (item 1) ---------- */
+/* ---------- Variáveis do tema ---------- */
 :root {
-    /* cores base */
     --cor-primaria: #1E3A8A;
     --cor-primaria-contraste: #FFFFFF;
     --cor-acento: #F59E0B;
@@ -23,27 +12,25 @@
     --cor-borda: #DDDDDD;
     --cor-overlay: rgba(0, 0, 0, 0.6);
 
-    /* cores semânticas dos status (item 3) */
-    --cor-assistido-fundo: #D1FAE5;   /* verde: concluído */
+    --cor-assistido-fundo: #D1FAE5;
     --cor-assistido-texto: #065F46;
-    --cor-assistindo-fundo: #FEF3C7;  /* âmbar: em andamento */
+    --cor-assistindo-fundo: #FEF3C7;
     --cor-assistindo-texto: #92400E;
-    --cor-quero-fundo: #DBEAFE;       /* azul: planejado */
+    --cor-quero-fundo: #DBEAFE;
     --cor-quero-texto: #1E40AF;
 
-    /* raios e espaçamentos */
     --raio-sm: 4px;
     --raio-md: 8px;
     --raio-pill: 999px;
     --espaco-05: 0.5rem;
     --espaco-1: 0.35rem;
     --espaco-2: 0.75rem;
-    --espaco-3: 1rem;   /* 16px */
-    --espaco-4: 1.5rem; /* 24px */
+    --espaco-3: 1rem;
+    --espaco-4: 1.5rem;
     --espaco-5: 2rem;
 }
 
-/* ---------- Tema escuro automático (item 2) ---------- */
+/* ---------- Tema escuro automático ---------- */
 @media (prefers-color-scheme: dark) {
     :root {
         --cor-primaria: #3B82F6;
@@ -67,7 +54,6 @@
     }
 }
 
-/* Reset aplicado */
 *,
 *::before,
 *::after {
@@ -76,7 +62,6 @@
     box-sizing: border-box;
 }
 
-/* Transição suave nos botões (item 4) */
 button {
     font: inherit;
     cursor: pointer;
@@ -88,7 +73,6 @@ button {
         transform 0.2s ease;
 }
 
-/* Foco visível em qualquer elemento interativo (item 4) */
 :focus-visible {
     outline: 2px solid var(--cor-acento);
     outline-offset: 2px;
@@ -141,7 +125,6 @@ header h1 {
     transform: translateY(-1px);
 }
 
-/* Na base mobile o botão mostra apenas o "+" */
 .btn-adicionar-longo {
     display: none;
 }
@@ -168,16 +151,14 @@ nav button:hover {
     color: var(--cor-quero-texto);
 }
 
-/* Filtro ativo destacado (estático por enquanto) */
 nav button.ativo {
     background: var(--cor-primaria);
     color: var(--cor-primaria-contraste);
 }
 
-/* ---------- Lista de cards (grid da Atividade 3) ---------- */
+/* ---------- Lista de cards ---------- */
 #lista {
     display: grid;
-    /* colunas automáticas: entram quantas couberem, mínimo 200px */
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: var(--espaco-3);
     padding: var(--espaco-3);
@@ -194,11 +175,10 @@ nav button.ativo {
     gap: var(--espaco-1);
 }
 
-/* Pôster com proporção fixa de pôster de cinema (2:3) */
 .card img {
     width: 100%;
     aspect-ratio: 2 / 3;
-    object-fit: cover;         /* preenche sem distorcer */
+    object-fit: cover;
     display: block;
     border-radius: var(--raio-sm);
 }
@@ -225,7 +205,6 @@ nav button.ativo {
     border-radius: var(--raio-pill);
 }
 
-/* Cores semânticas por status (item 3) */
 .badge.assistido {
     background: var(--cor-assistido-fundo);
     color: var(--cor-assistido-texto);
@@ -256,7 +235,6 @@ nav button.ativo {
     transform: translateY(-1px);
 }
 
-/* Aula 5: mensagem do estado vazio — filtro ou busca sem resultados */
 .vazio {
     padding: var(--espaco-4);
     color: var(--cor-texto-suave);
@@ -274,8 +252,6 @@ footer a {
 }
 
 /* ---------- Página adicionar.html ---------- */
-/* o conteúdo da página fica em um cartão centralizado,
-   com a mesma aparência do modal da index */
 #pagina-adicionar {
     /* largura explícita para o margin:auto centralizar também no mobile */
     width: min(528px, calc(100% - 2 * var(--espaco-3)));  /* 480px do modal + padding */
@@ -298,9 +274,9 @@ footer a {
     color: var(--cor-primaria);
 }
 
-/* ---------- Modal (itens 5 e 6) ---------- */
+/* ---------- Modal ---------- */
 .modal {
-    position: fixed;           /* cobre a janela inteira */
+    position: fixed;
     inset: 0;
     background: var(--cor-overlay);
     display: flex;
@@ -329,7 +305,6 @@ footer a {
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio-md);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    /* animação de entrada (item 6) */
     animation: modal-entrar 0.3s ease;
 }
 
@@ -365,7 +340,6 @@ footer a {
     transform: scale(1.15);
 }
 
-/* Erros de validação do modal (Aula 4, item 3) */
 .erros {
     margin-bottom: var(--espaco-2);
     padding: var(--espaco-2) var(--espaco-3);
@@ -385,7 +359,6 @@ footer a {
     }
 }
 
-/* Campos do formulário (item 6) — valem para o modal e para adicionar.html */
 #form-filme {
     display: flex;
     flex-direction: column;
@@ -456,7 +429,6 @@ footer a {
         padding: var(--espaco-3) var(--espaco-5);
     }
 
-    /* h1 maior no desktop (clamp da Aula 3) */
     header h1 {
         font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
     }
@@ -465,7 +437,6 @@ footer a {
         padding: var(--espaco-2) var(--espaco-5);
     }
 
-    /* gap maior entre os cards */
     #lista {
         gap: var(--espaco-4);
         padding: var(--espaco-4) var(--espaco-5);

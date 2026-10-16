@@ -1,7 +1,3 @@
-// Aula 1 — funções que todo card usa (da Parte 1 ao React)
-
-// 2. Rótulo do badge a partir do status interno.
-//    Pura: recebe um valor e devolve outro, sem tocar no DOM.
 function rotuloStatus(status) {
     if (status === "assistido") {
         return "Assistido"
@@ -12,11 +8,9 @@ function rotuloStatus(status) {
     if (status === "quero") {
         return "Quero assistir"
     }
-    return status // outro valor volta como veio
+    return status
 }
 
-// 3. String de 5 estrelas: cheia (★) se i <= nota, vazia (☆) caso contrário.
-//    Arrow function + um for de 1 a 5 acumulando + ternário. Pura também.
 const estrelas = (nota) => {
     let texto = ""
     for (let i = 1; i <= 5; i++) {
@@ -25,14 +19,8 @@ const estrelas = (nota) => {
     return texto
 }
 
-// 4. Teste no console das duas funções puras:
-//    esperado: "Quero assistir ★★★☆☆"
 console.log(rotuloStatus("quero"), estrelas(3))
 
-// Aula 2 — os dados viram tela: os cards nascem de um array.
-
-// 1. Dados de exemplo: os mesmos 6 filmes que estavam escritos à mão
-//    no index.html. Cada objeto carrega tudo que o card precisa.
 const filmesIniciais = [
     {
         id: 1,
@@ -96,20 +84,13 @@ const filmesIniciais = [
     }
 ]
 
-// Aula 5, item 3 — persistência: o array sobrevive ao recarregar (F5)
-// graças ao localStorage. A chave usa o prefixo do projeto para não
-// colidir com outros dados gravados no mesmo domínio.
-
+// Prefixo da chave evita colisão com outros dados no mesmo domínio.
 const CHAVE = "cinetrack:filmes"
 
-// Escreve o estado atual no localStorage (JSON só guarda dados, não funções).
 function salvar() {
     localStorage.setItem(CHAVE, JSON.stringify(filmes))
 }
 
-// Lê a lista gravada; sem dados gravados (ou corrompidos), devolve o
-// cardápio inicial. try/catch protege contra JSON quebrado — por
-// exemplo, editado à mão no DevTools.
 function carregar() {
     try {
         const bruto = localStorage.getItem(CHAVE)
@@ -123,9 +104,8 @@ function carregar() {
     }
 }
 
-// Aula 4, item 4: cada card nasce de createElement + textContent
-// (nada de innerHTML, então o conteúdo nunca é interpretado como HTML).
-// Pura em relação ao DOM externo: só monta e devolve o elemento pronto.
+// createElement + textContent (nada de innerHTML): o conteúdo
+// nunca é interpretado como HTML.
 function criarCard(filme) {
     const card = document.createElement("article")
     card.className = "card"
@@ -170,8 +150,6 @@ function criarCard(filme) {
     return card
 }
 
-// Aula 4, item 4: monta um DocumentFragment com um card por filme.
-// O fragmento é inserido de uma vez só em atualizar().
 function renderizarCards(lista) {
     const fragmento = document.createDocumentFragment()
     for (const filme of lista) {
@@ -180,32 +158,15 @@ function renderizarCards(lista) {
     return fragmento
 }
 
-// 1. Ao carregar: injeta os cards no lugar do HTML digitado à mão.
-//    O script está no fim do <body>, então #lista já existe.
-//    (Aula 3: este bloco virou a função atualizar(), logo abaixo.)
-
-// Aula 3 — a lista agora tem estado: filmes é a cópia que pode mudar
-// (remoções). let porque o filter devolve um array novo a cada remoção.
-// Aula 5, item 3: a cópia inicial agora vem do localStorage — o que
-// o usuário cadastrou antes continua na lista depois do F5.
 let filmes = carregar()
 
-// Status selecionado na nav. "todos" mostra o array inteiro.
 let statusAtual = "todos"
 
-// Aula 5, item 2: texto da busca já em minúsculas e sem espaços nas
-// pontas. "" significa "sem busca" — o filtro não derruba nenhum filme.
 let termoBusca = ""
 
-// Rodapé: a contagem acompanha o estado atual, não é mais fixa.
 const rodapeInfo = document.querySelector("#total-filmes")
-
-// Campo de busca do header (Aula 5, item 2).
 const busca = document.querySelector("#busca")
 
-// Aula 5, item 1: filtra o array combinando OS DOIS filtros —
-// o status da nav e o texto da busca no título. Pura: devolve
-// um array novo, sem tocar no DOM nem no estado.
 function aplicarFiltros() {
     return filmes.filter((filme) => {
         const casaStatus = statusAtual === "todos" || filme.status === statusAtual
@@ -214,17 +175,13 @@ function aplicarFiltros() {
     })
 }
 
-// Aula 5, item 1: atualiza a tela inteira a partir do estado.
-// Toda mudança (remoção, filtro, busca, criação ou edição) passa
-// por aqui. replaceChildren troca o conteúdo inteiro pelo fragmento
-// devolvido por renderizarCards().
+// Atualiza a tela inteira a partir do estado; toda mudança passa por aqui.
 function atualizar() {
     const subconjunto = aplicarFiltros()
     const lista = document.querySelector("#lista")
 
-    // estado vazio: se o filtro/busca não achar nada, a área não fica
-    // em branco — a mensagem explica o porquê (e lê bem no leitor de tela,
-    // já que #lista é aria-live="polite").
+    // Estado vazio: mensagem em vez de área em branco (lida pelo
+    // leitor de tela via aria-live).
     if (subconjunto.length === 0) {
         const vazio = document.createElement("p")
         vazio.className = "vazio"
@@ -239,9 +196,6 @@ function atualizar() {
     rodapeInfo.textContent = `CineTrack © 2026 · ${filmes.length} filmes cadastrados`
 }
 
-// Aula 5, item 2: devolve uma versão de `funcao` que só roda depois
-// de `espera` ms SEM chamadas novas no meio. Pura: não sabe o que a
-// função passada faz, só controla QUANDO ela roda.
 function debounce(funcao, espera) {
     let idTimeout
     return (...argumentos) => {
@@ -250,39 +204,31 @@ function debounce(funcao, espera) {
     }
 }
 
-// Aula 5, item 2: cada pausa de digitação atualiza o termo e re-renderiza.
-// O valor novo chega pelo evento — não precisamos de variável extra.
 function aoDigitar(evento) {
     termoBusca = evento.target.value.trim().toLowerCase()
     atualizar()
 }
 
-// Aula 5, item 2: o debounce espera 300 ms de pausa — digitar "duna"
-// re-renderiza uma vez, não quatro (uma por letra).
+// Re-renderiza uma vez por pausa de digitação, não a cada letra.
 busca.addEventListener("input", debounce(aoDigitar, 300))
 
-// 3. Delegação de eventos em #lista: um único listener cuida dos botões
-//    de todos os cards — inclusive dos que forem criados no futuro.
+// Delegação de eventos: um único listener cuida dos botões de todos
+// os cards, inclusive dos que forem criados no futuro.
 document.querySelector("#lista").addEventListener("click", (evento) => {
     const botao = evento.target.closest("button")
 
     if (botao.classList.contains("btn-remover")) {
-        // closest sobe do botão até o <article> e lê o data-id do card
         const id = Number(botao.closest(".card").dataset.id)
         const filme = filmes.find((f) => f.id === id)
 
-        // confirm() devolve true só quando o usuário aceita
         if (filme && confirm(`Remover "${filme.titulo}" da lista?`)) {
             filmes = filmes.filter((f) => f.id !== id)
-            // Aula 5, item 3: grava antes de redesenhar.
             salvar()
             atualizar()
         }
     }
 
     if (botao.classList.contains("btn-editar")) {
-        // Aula 4, item 5: mesmo closest + data-id do remover,
-        // mas aqui o card encontrado vira o formulário do modal
         const id = Number(botao.closest(".card").dataset.id)
         const filme = filmes.find((f) => f.id === id)
 
@@ -291,11 +237,8 @@ document.querySelector("#lista").addEventListener("click", (evento) => {
         }
     }
 
-    // btn-remover e btn-editar: ambos tratados por esta delegação
 })
 
-// 4. Filtros: um listener na nav move a classe .ativo e re-renderiza
-//    só o subconjunto do status do botão clicado.
 const nav = document.querySelector("nav")
 
 nav.addEventListener("click", (evento) => {
@@ -304,37 +247,24 @@ nav.addEventListener("click", (evento) => {
         return
     }
 
-    // move o destaque visual para o botão clicado
     nav.querySelector(".ativo").classList.remove("ativo")
     botao.classList.add("ativo")
 
-    // Aula 5, item 1: muda o estado e pede a atualização — nada de
-    // render inline. data-status vem do HTML: todos, assistido,
-    // assistindo, quero
     statusAtual = botao.dataset.status
     atualizar()
 })
 
-// Aula 4 — o modal: adicionar e editar sem sair da página.
-
-// Referências do modal e do formulário (o script está no fim do body).
 const modal = document.querySelector("#modal")
 const modalTitulo = document.querySelector("#modal-titulo")
 const caixaErros = document.querySelector("#erros")
 const form = document.querySelector("#form-filme")
 
-// 1 + 5. Qual filme está sendo editado? null = modo adicionar.
 let editandoId = null
 
-// Aula 4, item 6: próximo id = maior id atual + 1 (ou 1 se vazio).
-// Pura: depende só do array recebido.
 function gerarId(lista) {
     return lista.length === 0 ? 1 : Math.max(...lista.map((f) => f.id)) + 1
 }
 
-// Aula 4, item 3: validação PURA — recebe o objeto do formulário
-// e devolve a lista de erros (vazia = válido). Não toca no DOM
-// nem no estado, então é fácil de testar no console.
 function validarFilme(filme) {
     const erros = []
 
@@ -357,8 +287,6 @@ function validarFilme(filme) {
     return erros
 }
 
-// Aula 4, item 3: exibe (ou limpa) os erros dentro do modal.
-// Cada erro vira um <li> com textContent.
 function mostrarErros(erros) {
     caixaErros.replaceChildren()
 
@@ -375,8 +303,6 @@ function mostrarErros(erros) {
     caixaErros.hidden = false
 }
 
-// Aula 4, item 1: abre o modal em modo ADICIONAR —
-// formulário limpo (reset) e editandoId nulo.
 function abrir() {
     form.reset()
     editandoId = null
@@ -386,7 +312,6 @@ function abrir() {
     form.elements["titulo"].focus()
 }
 
-// Aula 4, item 1: fecha o modal (Cancelar, botão × e Escape).
 function fechar() {
     modal.hidden = true
     form.reset()
@@ -394,8 +319,6 @@ function fechar() {
     mostrarErros([])
 }
 
-// Aula 4, item 5: preenche o formulário com o filme e abre
-// o modal em modo EDIÇÃO, guardando o id em editandoId.
 function abrirEdicao(filme) {
     form.reset()
     form.elements["titulo"].value = filme.titulo
@@ -414,32 +337,21 @@ function abrirEdicao(filme) {
     form.elements["titulo"].focus()
 }
 
-// Aula 4, item 1: liga "+ Adicionar" à abrir().
 document.querySelector(".btn-adicionar").addEventListener("click", abrir)
-
-// Aula 4, item 1: Cancelar (botão type="button" do form) fecha.
 form.querySelector("button[type='button']").addEventListener("click", fechar)
-
-// Bônus coerente: o × do canto também fecha (mesma fechar()).
 modal.querySelector(".modal-fechar").addEventListener("click", fechar)
 
-// Aula 4, item 1: Escape fecha o modal, só quando ele está aberto.
 document.addEventListener("keydown", (evento) => {
     if (evento.key === "Escape" && !modal.hidden) {
         fechar()
     }
 })
 
-// Aula 4, itens 2 + 3 + 6: o submit coleta, converte, valida
-// e só então salva (adicionar ou editar).
 form.addEventListener("submit", (evento) => {
     evento.preventDefault()
 
-    // item 2: FormData + Object.fromEntries viram um objeto simples
     const dados = Object.fromEntries(new FormData(form))
 
-    // item 2: ano e nota chegam como string — convertemos com Number.
-    // Nota vazia vira 0 (sem nota = ☆☆☆☆☆ no card).
     const filmeDoForm = {
         titulo: dados.titulo.trim(),
         ano: Number(dados.ano),
@@ -450,7 +362,6 @@ form.addEventListener("submit", (evento) => {
         comentario: dados.comentario
     }
 
-    // item 3: valida ANTES de tocar no estado; inválido não salva
     const erros = validarFilme(filmeDoForm)
     if (erros.length > 0) {
         mostrarErros(erros)
@@ -458,21 +369,16 @@ form.addEventListener("submit", (evento) => {
     }
 
     if (editandoId === null) {
-        // item 6: adicionar — id novo gerado por gerarId
         filmes = [...filmes, { id: gerarId(filmes), ...filmeDoForm }]
     } else {
-        // item 6: editar — map + spread preservam o id e a posição
         filmes = filmes.map((f) =>
             f.id === editandoId ? { ...f, ...filmeDoForm } : f
         )
     }
 
-    // Aula 5, item 3: grava no localStorage e depois atualiza a tela —
-    // o estado mudou, a tela acompanha.
     salvar()
     atualizar()
     fechar()
 })
 
-// Primeira atualização da página (agora já lendo o localStorage).
 atualizar()
