@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineTrack</title>
+    <meta name="description" content="CineTrack — catálogo pessoal de filmes para acompanhar o que você já viu, está vendo ou quer assistir.">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -38,7 +39,10 @@
     <!-- Modal de adicionar/editar filme: cópia estática do
          form#form-filme de adicionar.html. Oculto pelo atributo hidden;
          o app.js o mostra via abrir()/fechar() (Aula 4). -->
-    <div id="modal" class="modal" hidden>
+    <!-- Aula 5, item 5 (acessibilidade): role="dialog" + aria-modal
+         avisam o leitor de tela de que o resto da página está bloqueado;
+         aria-labelledby aponta o h2 que dá nome ao diálogo. -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" hidden>
         <div class="modal-conteudo">
             <button type="button" class="modal-fechar" aria-label="Fechar modal">&times;</button>
             <h2 id="modal-titulo">Adicionar filme</h2>

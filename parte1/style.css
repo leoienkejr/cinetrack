@@ -256,6 +256,14 @@ nav button.ativo {
     transform: translateY(-1px);
 }
 
+/* Aula 5: mensagem do estado vazio — filtro ou busca sem resultados */
+.vazio {
+    padding: var(--espaco-4);
+    color: var(--cor-texto-suave);
+    font-size: 1.05rem;
+    text-align: center;
+}
+
 footer {
     padding: var(--espaco-3);
     text-align: center;
