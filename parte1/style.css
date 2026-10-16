@@ -357,6 +357,26 @@ footer a {
     transform: scale(1.15);
 }
 
+/* Erros de validação do modal (Aula 4, item 3) */
+.erros {
+    margin-bottom: var(--espaco-2);
+    padding: var(--espaco-2) var(--espaco-3);
+    border: 1px solid #DC2626;
+    border-radius: var(--raio-sm);
+    background: #FEE2E2;
+    color: #991B1B;
+    font-size: 0.9rem;
+    list-style-position: inside;
+}
+
+@media (prefers-color-scheme: dark) {
+    .erros {
+        border-color: #F87171;
+        background: #450A0A;
+        color: #FCA5A5;
+    }
+}
+
 /* Campos do formulário (item 6) — valem para o modal e para adicionar.html */
 #form-filme {
     display: flex;

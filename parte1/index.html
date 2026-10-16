@@ -13,8 +13,9 @@
         <h1>CineTrack</h1>
         <input type="search" id="busca" aria-label="Buscar filme por título" placeholder="Buscar filme...">
         <!-- Dois elementos de texto: o curto aparece em telas menores,
-             o longo a partir de 1024px (troca feita no @media do CSS) -->
-        <button type="button" class="btn-adicionar" onclick="location.href='adicionar.html'">
+             o longo a partir de 1024px (troca feita no @media do CSS).
+             Aula 4: sem onclick — o app.js liga o botão à abrir(). -->
+        <button type="button" class="btn-adicionar">
             <span class="btn-adicionar-curto" aria-label="Adicionar filme">+</span>
             <span class="btn-adicionar-longo">+ Adicionar</span>
         </button>
@@ -34,13 +35,17 @@
         </section>
     </main>
 
-    <!-- Modal de adicionar filme (Aula 4, item 5): cópia estática do
-         form#form-filme de adicionar.html. Permanece oculto pelo
-         atributo hidden até a fase do curso com JavaScript. -->
+    <!-- Modal de adicionar/editar filme: cópia estática do
+         form#form-filme de adicionar.html. Oculto pelo atributo hidden;
+         o app.js o mostra via abrir()/fechar() (Aula 4). -->
     <div id="modal" class="modal" hidden>
         <div class="modal-conteudo">
             <button type="button" class="modal-fechar" aria-label="Fechar modal">&times;</button>
-            <h2>Adicionar filme</h2>
+            <h2 id="modal-titulo">Adicionar filme</h2>
+
+            <!-- Erros de validação (Aula 4, item 3): preenchido
+                 pela mostrarErros(); fica oculto quando não há erros -->
+            <ul id="erros" class="erros" hidden></ul>
 
             <form id="form-filme">
                 <input type="text" name="titulo" id="titulo-filme" required>
