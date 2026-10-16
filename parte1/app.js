@@ -29,34 +29,93 @@ const estrelas = (nota) => {
 //    esperado: "Quero assistir ★★★☆☆"
 console.log(rotuloStatus("quero"), estrelas(3))
 
-// 5. Reescreve o badge e a nota do primeiro card.
-//    O status vem da segunda classe do badge; a nota, do aria-label.
-const primeiroCard = document.querySelector(".card")
-const badgePrimeiro = primeiroCard.querySelector(".badge")
-const statusPrimeiro = badgePrimeiro.classList[1]
-badgePrimeiro.textContent = rotuloStatus(statusPrimeiro)
+// Aula 2 — os dados viram tela: os cards nascem de um array.
 
-const notaPrimeiro = parseInt(
-    primeiroCard.querySelector(".estrelas").getAttribute("aria-label").match(/Nota (\d+)/)[1],
-    10
-)
-primeiroCard.querySelector(".estrelas").textContent = estrelas(notaPrimeiro)
+// 1. Dados de exemplo: os mesmos 6 filmes que estavam escritos à mão
+//    no index.html. Cada objeto carrega tudo que o card precisa.
+const filmesIniciais = [
+    {
+        id: 1,
+        titulo: "A Origem",
+        ano: 2010,
+        genero: "Ficção científica",
+        poster: "https://image.tmdb.org/t/p/w300/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg",
+        nota: 5,
+        status: "assistido",
+        comentario: "A camada do sonho dentro do sonho continua impecável."
+    },
+    {
+        id: 2,
+        titulo: "Parasita",
+        ano: 2019,
+        genero: "Drama, Suspense",
+        poster: "https://image.tmdb.org/t/p/w300/bNGW8zYA91VqTZfV3jnKHPEKKvB.jpg",
+        nota: 5,
+        status: "assistido",
+        comentario: "Virada de tom brilhante, nada do que eu esperava."
+    },
+    {
+        id: 3,
+        titulo: "O Auto da Compadecida",
+        ano: 2000,
+        genero: "Comédia",
+        poster: "https://image.tmdb.org/t/p/w300/y3IhuITELtprMhUd7bccu629rba.jpg",
+        nota: 4,
+        status: "assistido",
+        comentario: "João Grilo e o Major: clássico do cinema nacional."
+    },
+    {
+        id: 4,
+        titulo: "Duna: Parte Dois",
+        ano: 2024,
+        genero: "Ficção científica",
+        poster: "https://image.tmdb.org/t/p/w300/VMy4UGsI2u3f4fALGeCqCdsQBb.jpg",
+        nota: 4,
+        status: "assistindo",
+        comentario: "Parei no meio para ver de novo com som melhor."
+    },
+    {
+        id: 5,
+        titulo: "Interestelar",
+        ano: 2014,
+        genero: "Ficção científica",
+        poster: "https://image.tmdb.org/t/p/w300/tR1XVa5bxgdh2bRw2u0DzrgkO2l.jpg",
+        nota: 5,
+        status: "quero",
+        comentario: "Todo mundo diz que preciso rever na telona."
+    },
+    {
+        id: 6,
+        titulo: "Cidade de Deus",
+        ano: 2002,
+        genero: "Drama",
+        poster: "https://image.tmdb.org/t/p/w300/gfnXixcGC060QcG6JPxN6AMdVsq.jpg",
+        nota: 5,
+        status: "assistido",
+        comentario: "Fotografia e ritmo: um marco brasileiro."
+    }
+]
 
-// 7. (pesquisa: seleção no DOM) Aplica as funções aos 6 cards
-//    com querySelectorAll e for...of. Na Aula 2, renderizarCards
-//    fará isso a partir dos dados, sem HTML repetido à mão.
-const cards = document.querySelectorAll(".card")
-
-for (const card of cards) {
-    const badge = card.querySelector(".badge")
-    const estrelasCard = card.querySelector(".estrelas")
-
-    const status = badge.classList[1]
-    const nota = parseInt(estrelasCard.getAttribute("aria-label").match(/Nota (\d+)/)[1], 10)
-
-    badge.textContent = rotuloStatus(status)
-    estrelasCard.textContent = estrelas(nota)
+// 3. Monta o HTML de cada card com map (mesma estrutura dos cards
+//    antigos) e concatena com join(""). Pura: devolve uma string,
+//    quem toca no DOM é quem chama.
+function renderizarCards(lista) {
+    return lista.map((filme) => `
+        <article class="card" data-id="${filme.id}">
+            <img src="${filme.poster}" alt="Pôster do filme ${filme.titulo}">
+            <h2>${filme.titulo}</h2>
+            <p>${filme.ano} &middot; ${filme.genero}</p>
+            <span class="estrelas" aria-label="Nota ${filme.nota} de 5">${estrelas(filme.nota)}</span>
+            <span class="badge ${filme.status}">${rotuloStatus(filme.status)}</span>
+            <button type="button">Editar</button>
+            <button type="button">Remover</button>
+        </article>
+    `).join("")
 }
+
+// 4. Ao carregar: injeta os cards no lugar do HTML digitado à mão.
+//    O script está no fim do <body>, então #lista já existe.
+document.querySelector("#lista").innerHTML = renderizarCards(filmesIniciais)
 
 // 6. Rodapé: total de filmes com template literal.
 const TOTAL = 6
