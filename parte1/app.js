@@ -28,17 +28,17 @@ const filmesIniciais = [
         poster: "https://image.tmdb.org/t/p/w300/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg",
         nota: 5,
         status: "assistido",
-        comentario: "A camada do sonho dentro do sonho continua impecável."
+        comentario: "Revejo sempre."
     },
     {
         id: 2,
         titulo: "Parasita",
         ano: 2019,
-        genero: "Drama, Suspense",
+        genero: "Suspense",
         poster: "https://image.tmdb.org/t/p/w300/bNGW8zYA91VqTZfV3jnKHPEKKvB.jpg",
-        nota: 5,
+        nota: 4,
         status: "assistido",
-        comentario: "Virada de tom brilhante, nada do que eu esperava."
+        comentario: ""
     },
     {
         id: 3,
@@ -46,9 +46,9 @@ const filmesIniciais = [
         ano: 2000,
         genero: "Comédia",
         poster: "https://image.tmdb.org/t/p/w300/y3IhuITELtprMhUd7bccu629rba.jpg",
-        nota: 4,
+        nota: 5,
         status: "assistido",
-        comentario: "João Grilo e o Major: clássico do cinema nacional."
+        comentario: "Classico nacional."
     },
     {
         id: 4,
@@ -58,7 +58,7 @@ const filmesIniciais = [
         poster: "https://image.tmdb.org/t/p/w300/VMy4UGsI2u3f4fALGeCqCdsQBb.jpg",
         nota: 4,
         status: "assistindo",
-        comentario: "Parei no meio para ver de novo com som melhor."
+        comentario: ""
     },
     {
         id: 5,
@@ -68,7 +68,7 @@ const filmesIniciais = [
         poster: "https://image.tmdb.org/t/p/w300/tR1XVa5bxgdh2bRw2u0DzrgkO2l.jpg",
         nota: 5,
         status: "quero",
-        comentario: "Todo mundo diz que preciso rever na telona."
+        comentario: ""
     },
     {
         id: 6,
@@ -76,9 +76,9 @@ const filmesIniciais = [
         ano: 2002,
         genero: "Drama",
         poster: "https://image.tmdb.org/t/p/w300/gfnXixcGC060QcG6JPxN6AMdVsq.jpg",
-        nota: 5,
-        status: "assistido",
-        comentario: "Fotografia e ritmo: um marco brasileiro."
+        nota: 4,
+        status: "quero",
+        comentario: ""
     }
 ]
 
