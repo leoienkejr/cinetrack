@@ -156,7 +156,7 @@ nav button.ativo {
     color: var(--cor-primaria-contraste);
 }
 
-/* ANP 06: ordenação — rótulo e select no mesmo grupo visual dos filtros */
+/* Ordenação — rótulo e select no mesmo grupo visual dos filtros */
 .rotulo-ordenar {
     align-self: center;
     margin-left: var(--espaco-2);
@@ -273,8 +273,8 @@ footer a {
 
 /* ---------- Página adicionar.html ---------- */
 #pagina-adicionar {
-    /* largura explícita para o margin:auto centralizar também no mobile */
-    width: min(528px, calc(100% - 2 * var(--espaco-3)));  /* 480px do modal + padding */
+    /* largura explícita (modal 480px + padding): o margin:auto centraliza no mobile */
+    width: min(528px, calc(100% - 2 * var(--espaco-3)));
     margin: var(--espaco-3) auto var(--espaco-4);
     padding: var(--espaco-4);
     background: var(--cor-superficie);
@@ -295,8 +295,7 @@ footer a {
 }
 
 /* ---------- Campos e ações do formulário da página ---------- */
-/* Cada div.campo empilha o par rótulo + campo em coluna,
-   com um gap pequeno entre eles. */
+/* cada div.campo empilha o par rótulo + campo em coluna */
 .campo {
     display: flex;
     flex-direction: column;
@@ -338,8 +337,7 @@ footer a {
     display: none;
 }
 
-/* coluna em flex: o título fica fixo e o formulário é quem rola,
-   preservando o padding interno do cartão mesmo com conteúdo longo */
+/* flex column: título fixo e formulário rolando dentro do cartão */
 .modal-conteudo {
     position: relative;
     display: flex;
@@ -410,8 +408,7 @@ footer a {
     display: flex;
     flex-direction: column;
     gap: var(--espaco-1);
-    /* dentro do modal é o formulário que rola (o cartão é flex column),
-       assim o padding do modal nunca é "engolido" pela rolagem */
+    /* dentro do modal é o formulário que rola */
     overflow-y: auto;
     min-height: 0;
 }
@@ -490,7 +487,6 @@ footer a {
         padding: var(--espaco-4) var(--espaco-5);
     }
 
-    /* a partir de 1024px: esconde o "+" e mostra "+ Adicionar" */
     .btn-adicionar-curto {
         display: none;
     }
@@ -501,10 +497,8 @@ footer a {
 }
 
 /* ---------- Impressão ---------- */
-/* Mesma técnica do dark mode: redefinimos as variáveis do :root.
-   Como este bloco vem por último no arquivo, quando o sistema está em
-   dark mode E o destino é o papel, os valores claros daqui vencem a
-   cascata — o tema escuro nunca vaza para a impressão. */
+/* Mesma técnica do dark mode: redefine as variáveis do :root; como este
+   bloco vem por último, vence a cascata — o tema escuro nunca vaza pro papel. */
 @media print {
     :root {
         --cor-primaria: #1E3A8A;
@@ -527,8 +521,7 @@ footer a {
         --cor-quero-texto: #1E40AF;
     }
 
-    /* Busca, botão "+ Adicionar", filtros, botões Editar/Remover dos
-       cards e footer não fazem sentido no papel. */
+    /* controles interativos não fazem sentido no papel */
     #busca,
     .btn-adicionar,
     nav,
@@ -537,8 +530,7 @@ footer a {
         display: none;
     }
 
-    /* O header vira um simples título em texto escuro sobre papel branco
-       (fundo azul-escuro gastaria tinta e contrastaria com o catálogo). */
+    /* header simples: fundo azul-escuro gastaria tinta no papel */
     header {
         background: transparent;
         color: var(--cor-texto);

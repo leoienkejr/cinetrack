@@ -102,8 +102,7 @@ function carregar() {
     }
 }
 
-// createElement + textContent (nada de innerHTML): o conteúdo
-// nunca é interpretado como HTML.
+// createElement + textContent (nada de innerHTML): o conteúdo nunca vira HTML.
 function criarCard(filme) {
     const card = document.createElement("article")
     card.className = "card"
@@ -163,21 +162,17 @@ let statusAtual = "todos"
 
 let termoBusca = ""
 
-// ANP 06: critério de ordenação escolhido no select; o padrão é título.
+// Critério de ordenação escolhido no select; o padrão é título.
 let ordenacaoAtual = "titulo"
 
-// Um comparador por critério. Título usa localeCompare com locale pt-BR,
-// que posiciona acentos junto da letra base ("Água" ordena com os "A",
-// e não depois do "Z", como aconteceria na comparação de code points).
+// Título usa localeCompare pt-BR: acentos ordenam junto da letra base.
 const comparadores = {
     titulo: (a, b) => a.titulo.localeCompare(b.titulo, "pt-BR"),
     ano: (a, b) => b.ano - a.ano,   // mais recentes primeiro
     nota: (a, b) => b.nota - a.nota // melhor nota primeiro
 }
 
-// sort muta o array em que é chamado, então ordenarLista copia antes
-// ([...lista]) para nunca alterar o array filmes nem o resultado de
-// aplicarFiltros.
+// sort muta o array: copia antes para não alterar o estado da aplicação.
 function ordenarLista(lista) {
     return [...lista].sort(comparadores[ordenacaoAtual])
 }
@@ -198,8 +193,7 @@ function atualizar() {
     const subconjunto = ordenarLista(aplicarFiltros())
     const lista = document.querySelector("#lista")
 
-    // Estado vazio: mensagem em vez de área em branco (lida pelo
-    // leitor de tela via aria-live).
+    // Estado vazio: mensagem em vez de área em branco (aria-live anuncia).
     if (subconjunto.length === 0) {
         const vazio = document.createElement("p")
         vazio.className = "vazio"
@@ -272,9 +266,7 @@ nav.addEventListener("click", (evento) => {
     atualizar()
 })
 
-// ANP 06: a escolha de ordenação fica guardada em ordenacaoAtual (como
-// statusAtual guarda o filtro) e vale para qualquer combinação de busca
-// e filtro: atualizar() sempre reordena a lista já filtrada.
+// Buscar, filtrar e ordenar combinam: atualizar() reordena a lista já filtrada.
 const ordenar = document.querySelector("#ordenar")
 ordenar.value = ordenacaoAtual
 
