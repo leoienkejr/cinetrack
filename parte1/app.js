@@ -110,7 +110,8 @@ function criarCard(filme) {
     card.dataset.id = filme.id
 
     const poster = document.createElement("img")
-    poster.src = filme.poster
+    // Pôster ausente: usa placeholder em vez de imagem quebrada.
+    poster.src = filme.poster || "https://placehold.co/200x300?text=Sem+p%C3%B4ster"
     poster.alt = `Pôster do filme ${filme.titulo}`
     card.append(poster)
 
