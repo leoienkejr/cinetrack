@@ -308,8 +308,8 @@ function validarFilme(filme) {
     if (!["quero", "assistindo", "assistido"].includes(filme.status)) {
         erros.push("Escolha um status válido.")
     }
-    if (filme.nota !== 0 && (filme.nota < 1 || filme.nota > 5)) {
-        erros.push("A nota deve ser de 1 a 5.")
+    if (!Number.isInteger(filme.nota) || filme.nota < 1 || filme.nota > 5) {
+        erros.push("A nota deve ser um número inteiro de 1 a 5.")
     }
 
     return erros
