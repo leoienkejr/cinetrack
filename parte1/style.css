@@ -360,11 +360,12 @@ footer {
     min-height: 0;
 }
 
+/* rótulo acima do seu campo; o margin-top separa um grupo do anterior */
 #form-filme label {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--cor-texto-suave);
-    margin-top: var(--espaco-1);
+    margin-top: var(--espaco-2);
 }
 
 #form-filme input,
