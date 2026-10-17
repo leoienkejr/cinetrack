@@ -2,35 +2,26 @@
 
 /**
  * CineTrack — Parte 1 (frontend interativo).
- *
- * Funções puras recebem tudo de que precisam por parâmetro e devolvem
- * valores novos; o estado (filmes, filtro, editandoId) vive apenas neste
- * IIFE e é mexido só pelos handlers, que após cada mudança chamam
- * salvar() e atualizar().
  */
 (() => {
-    // ---------- Constantes ----------
     const CHAVE = "cinetrack:filmes"
     const ANO_MIN = 1888
     const ANO_MAX = 2030
     const PLACEHOLDER = "https://placehold.co/200x300?text=Sem+p%C3%B4ster"
     const TEMPO_DEBOUNCE = 300
 
-    /** Status válidos → rótulo exibido na badge. */
     const STATUS = Object.freeze({
         assistido: "Assistido",
         assistindo: "Assistindo",
         quero: "Quero assistir"
     })
 
-    /** Um comparador por critério do select de ordenação. */
     const CRITERIOS = Object.freeze({
         titulo: (a, b) => a.titulo.localeCompare(b.titulo, "pt-BR"), // acentos junto da base
         ano: (a, b) => b.ano - a.ano,   // mais recentes primeiro
         nota: (a, b) => b.nota - a.nota // melhor nota primeiro
     })
 
-    /** Dados iniciais: os 6 filmes canônicos da Seção 5, só na primeira visita. */
     const filmesIniciais = [
         { id: 1, titulo: "A Origem", ano: 2010, genero: "Ficção científica", poster: "https://image.tmdb.org/t/p/w300/9e3Dz7aCANy5aRUQF745IlNloJ1.jpg", nota: 5, status: "assistido", comentario: "Revejo sempre." },
         { id: 2, titulo: "Parasita", ano: 2019, genero: "Suspense", poster: "https://image.tmdb.org/t/p/w300/bNGW8zYA91VqTZfV3jnKHPEKKvB.jpg", nota: 4, status: "assistido", comentario: "" },
@@ -40,7 +31,7 @@
         { id: 6, titulo: "Cidade de Deus", ano: 2002, genero: "Drama", poster: "https://image.tmdb.org/t/p/w300/gfnXixcGC060QcG6JPxN6AMdVsq.jpg", nota: 4, status: "quero", comentario: "" }
     ]
 
-    // ---------- Funções puras (recebem parâmetros, devolvem valores) ----------
+
     /** Rótulo legível do status ("quero" → "Quero assistir"). */
     const rotuloStatus = (status) => STATUS[status] ?? status
 
@@ -143,7 +134,6 @@
         }
     }
 
-    // ---------- Estado (só este IIFE enxerga) e efeitos ----------
     const ui = Object.freeze({
         lista: document.querySelector("#lista"),
         busca: document.querySelector("#busca"),
@@ -198,7 +188,7 @@
         ui.rodape.textContent = `CineTrack © 2026 · ${filmes.length} filmes cadastrados`
     }
 
-    /** Mostra os erros na lista da UI (nunca alert()); esconde quando vazia. */
+    /** Mostra os erros na lista da UI; esconde quando vazia. */
     function mostrarErros(erros) {
         if (erros.length === 0) {
             ui.erros.replaceChildren()
