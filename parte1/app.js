@@ -105,12 +105,6 @@
     const gerarId = (filmes) =>
         filmes.length === 0 ? 1 : Math.max(...filmes.map((f) => f.id)) + 1
 
-    /** "quero-assistir" (valor do select) → "quero" (valor dos dados). */
-    const statusDoFormulario = (status) => (status === "quero-assistir" ? "quero" : status)
-
-    /** "quero" (valor dos dados) → "quero-assistir" (valor do select). */
-    const statusParaFormulario = (status) => (status === "quero" ? "quero-assistir" : status)
-
     /** Dados do formulário, com os campos numéricos convertidos (RF-05). */
     function lerFormulario(form) {
         const dados = Object.fromEntries(new FormData(form))
@@ -119,7 +113,7 @@
             ano: Number(dados.ano),
             genero: dados.genero.trim(),
             poster: dados["url-poster"].trim(),
-            status: statusDoFormulario(dados.status),
+            status: dados.status,
             nota: dados.nota === "" ? 0 : Number(dados.nota),
             comentario: dados.comentario
         }
@@ -247,7 +241,7 @@
         ui.form.elements["ano"].value = filme.ano
         ui.form.elements["genero"].value = filme.genero
         ui.form.elements["url-poster"].value = filme.poster
-        ui.form.elements["status"].value = statusParaFormulario(filme.status)
+        ui.form.elements["status"].value = filme.status
         ui.form.elements["nota"].value = filme.nota || ""
         ui.form.elements["comentario"].value = filme.comentario
         ui.titulo.textContent = "Editar filme"
